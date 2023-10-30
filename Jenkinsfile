@@ -1,8 +1,9 @@
+def LAST_HTML_HASH = ''
+
 pipeline {
     agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
-        LAST_HTML_HASH = sh(script: 'md5sum index.html | awk \'{print $1}\'', returnStdout: true).trim()
     }
     stages {
         stage('Checkout') {
@@ -24,7 +25,7 @@ pipeline {
                     if (currentHtmlHash != LAST_HTML_HASH) {
                         echo 'HTML файл изменен, пересборка образа Docker'
                         LAST_HTML_HASH = currentHtmlHash
-                        sh 'docker build -t ibreakway/jenkins_finish:latest .'
+                        buildImage()
                     } else {
                         echo 'HTML файл не изменился, пересборка не нужна'
                     }
@@ -56,7 +57,8 @@ pipeline {
             }
         }
         stage('Push') {
-            steps {       
+            steps {
+                  buildImage()
                   sh 'docker push ibreakway/jenkins_finish:latest'
                 }
             }
@@ -66,5 +68,9 @@ pipeline {
            sh 'docker logout'
         }
     }
+}
+
+def buildImage() {
+    sh 'docker build -t ibreakway/jenkins_finish:latest .'
 }
 
