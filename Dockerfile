@@ -1,7 +1,7 @@
 FROM nginx:alpine
 
 #установка утилиты curl
-RUN apk add --no-cache curl
+RUN apk add --no-cache wget
 
 #создании директории для файлов
 RUN mkdir -p /usr/share/nginx/html
