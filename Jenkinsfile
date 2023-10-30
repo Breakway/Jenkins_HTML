@@ -27,8 +27,9 @@ pipeline {
                 echo 'Test passed'
             } else {
                 error 'Test failed'
+                }
+              }
             }
-          }
         }
         stage('Login') {
             steps {
@@ -47,3 +48,4 @@ pipeline {
         }
     }
 }
+
