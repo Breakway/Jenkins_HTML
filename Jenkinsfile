@@ -20,7 +20,7 @@ pipeline {
             def githubRepo = 'Jenkins_HTML' 
             def githubFile = 'index.html'
 
-            def githubRawUrl = "https://raw.githubusercontent.com/$githubRepo/main/$githubFile"
+            def githubRawUrl = "https://raw.githubusercontent.com/Breakway/$githubRepo/main/$githubFile"
             sh "wget -O index.html $githubRawUrl"
                 
             def htmlContent = readFile('index.html')
