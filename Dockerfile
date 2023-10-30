@@ -16,3 +16,5 @@ RUN mv /usr/share/nginx/html/styles_temp.css /usr/share/nginx/html/styles.css
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
+
+#####
