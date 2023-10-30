@@ -1,8 +1,13 @@
 FROM nginx:alpine
 
+#установка утилиты curl
+RUN apk add --no-cache curl
 
-COPY https://raw.githubusercontent.com/Jenkins_HTML/main/index.html /usr/share/nginx/html/
-COPY https://raw.githubusercontent.com/Jenkins_HTML/main/styles.css /usr/share/nginx/html/
+#создании директории для файлов
+RUN mkdir -p /usr/share/nginx/html
+
+RUN curl -o /usr/share/nginx/html/index.html https://raw.githubusercontent.com/Jenkins_HTML/main/index.html
+RUN curl -o /usr/share/nginx/html/styles.css https://raw.githubusercontent.com/Jenkins_HTML/main/styles.css
 
 #порт
 EXPOSE 80
