@@ -6,8 +6,8 @@ RUN apk add --no-cache curl
 #создании директории для файлов
 RUN mkdir -p /usr/share/nginx/html
 
-RUN wget -O /usr/share/nginx/html/index.html https://raw.githubusercontent.com/Jenkins_HTML/main/index.html
-RUN wget -O /usr/share/nginx/html/styles.css https://raw.githubusercontent.com/Jenkins_HTML/main/styles.css
+RUN wget -O /usr/share/nginx/html/index.html https://raw.githubusercontent.com/Breakway/Jenkins_HTML/main/index.html
+RUN wget -O /usr/share/nginx/html/styles.css https://raw.githubusercontent.com/Breakway/Jenkins_HTML/main/styles.css
 
 #порт
 EXPOSE 80
