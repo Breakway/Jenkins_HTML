@@ -24,16 +24,11 @@ pipeline {
                     if (currentHtmlHash != LAST_HTML_HASH) {
                         echo 'HTML файл изменен, пересборка образа Docker'
                         LAST_HTML_HASH = currentHtmlHash
-                        buildImage()
+                        sh 'docker build -t ibreakway/jenkins_finish:latest .'
                     } else {
                         echo 'HTML файл не изменился, пересборка не нужна'
                     }
                 }
-            }
-        }
-        stage('Build') {
-            steps {
-                    sh 'docker build -t ibreakway/jenkins_finish:latest .'
             }
         }
         stage('Test for word') {
