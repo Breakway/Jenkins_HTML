@@ -19,10 +19,11 @@ pipeline {
             script {
             def githubRepo = 'Jenkins_HTML' 
             def githubFile = 'index.html'
-            def githubToken = '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'
 
             def githubRawUrl = "https://raw.githubusercontent.com/$githubRepo/main/$githubFile"
-            def htmlContent = sh(script: "curl -H 'Authorization: token $githubToken' -s $githubRawUrl", returnStdout: true).trim()
+            sh "wget -O index.html $githubRawUrl"
+                
+            def htmlContent = readFile('index.html')
             
             if (htmlContent.contains('JENKINS')) {
                 echo 'Test passed'
