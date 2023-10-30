@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
+        LAST_HTML_HASH = sh(script: 'md5sum index.html | awk \'{print $1}\'', returnStdout: true).trim()
     }
     stages {
         stage('Checkout') {
@@ -9,12 +10,33 @@ pipeline {
                 checkout scm
             }
         }
+        stage('Test for Changes') {
+            steps {
+                script {
+                    def githubRepo = 'Jenkins_HTML' 
+                    def githubFile = 'index.html'
+
+                    def githubRawUrl = "https://raw.githubusercontent.com/Breakway/$githubRepo/main/$githubFile"
+                    sh "wget -O index.html $githubRawUrl"
+                    
+                    def currentHtmlHash = sh(script: 'md5sum index.html | awk \'{print $1}\'', returnStdout: true).trim()
+
+                    if (currentHtmlHash != LAST_HTML_HASH) {
+                        echo 'HTML файл изменен, пересборка образа Docker'
+                        LAST_HTML_HASH = currentHtmlHash
+                        buildImage()
+                    } else {
+                        echo 'HTML файл не изменился, пересборка не нужна'
+                    }
+                }
+            }
+        }
         stage('Build') {
             steps {
                     sh 'docker build -t ibreakway/jenkins_finish:latest .'
             }
         }
-        stage('Test') {
+        stage('Test for word') {
           steps {
             script {
             def githubRepo = 'Jenkins_HTML' 
