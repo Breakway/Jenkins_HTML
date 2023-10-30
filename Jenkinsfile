@@ -11,7 +11,10 @@ pipeline {
         }
         stage('Build') {
             steps {
-                    sh 'docker build -t ibreakway/jenkins_finish:latest .'
+                   script { 
+                    def cacheBustValue = new Date().getTime()   
+                    sh 'docker build --build-arg CACHEBUST=$cacheBustValue -t ibreakway/jenkins_finish:latest .'
+                    }
             }
         }
         stage('Test') {
