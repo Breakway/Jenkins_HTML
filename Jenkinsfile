@@ -59,7 +59,7 @@ pipeline {
         stage('Push') {
             steps {
                   buildImage()
-                  sh 'docker push ibreakway/jenkins_finish:ver_1'
+                  sh 'docker push ibreakway/jenkins_finish:latest'
                 }
             }
         }
@@ -71,6 +71,6 @@ pipeline {
 }
 
 def buildImage() {
-    sh 'docker build -t ibreakway/jenkins_finish:ver_1 .'
+    sh 'docker build -t ibreakway/jenkins_finish:latest .'
 }
 
