@@ -58,7 +58,6 @@ pipeline {
         }
         stage('Push') {
             steps {
-                  buildImage()
                   sh 'docker push ibreakway/jenkins_finish:latest'
                 }
             }
